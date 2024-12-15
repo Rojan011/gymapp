@@ -9,17 +9,21 @@ function App() {
   );
 
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+
   useEffect(() => {
-    if (window.scrollY === 0) {
-      setIsTopOfPage(true);
-      setSelectedPage(SelectedPage.Home);
-    } else {
-      setIsTopOfPage(false);
-    }
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+        setSelectedPage(SelectedPage.Home);
+      }
+      if (window.scrollY !== 0) setIsTopOfPage(false);
+    };
     //This is required every time we use window functions jastai hamle window.scrollY haru use garem tesma yo kamlagxa
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div className="app bg-gray-20">
       <Navbar
@@ -33,7 +37,3 @@ function App() {
 }
 
 export default App;
-
-function handleScroll(this: Window, ev: Event) {
-  throw new Error("Function not implemented.");
-}
